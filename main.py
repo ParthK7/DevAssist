@@ -3,6 +3,7 @@ import sys
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+from prompts import system_prompt
 
 load_dotenv()
 api_key = os.environ.get("GEMINI_API_KEY")
@@ -20,15 +21,16 @@ else:
 
 response = client.models.generate_content(
     model = "gemini-2.0-flash-001", 
-    contents = messages
+    contents = messages, 
+    config = types.GenerateContentConfig(system_instruction = system_prompt)
 )
 
 
 if sys.argv[-1] == "--verbose":
     print(f"User prompt: {prompt}")
-    print(f"LLM response:- /n {response.text}")
+    print(f"LLM response:- \n {response.text}")
     print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
     print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
 
 else:
-    print(f"LLM response:- /n {response.text}")
+    print(f"LLM response:- \n {response.text}")
