@@ -2,7 +2,7 @@ import os
 from google.genai import types
 
 
-def get_files_info(working_directory, directory = None):
+def get_files_info(working_directory, directory = "."):
     working_directory = os.path.abspath(working_directory)
     directory = os.path.join(working_directory, directory)
     directory = os.path.abspath(directory)
